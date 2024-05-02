@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<div class="container mt-5">
+    <div class="col text-center">
+        <h1 class="text-primary">REGISTER</h1>
+        <hr>
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label text-danger">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Your Username" value="{{username}}">
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label text-danger">E-mail</label>
+                <input type="email" class="form-control" name="email" placeholder="Your E-mail" value="{{email}}">
+            </div>
+            <div class="mb-3">
+                <label for="firstname" class="form-label text-danger">First Name</label>
+                <input type="text" class="form-control" name="firstname" placeholder="Your First Name" value="{{firstname}}">
+            </div>
+            <div class="mb-3">
+                <label for="lastname" class="form-label text-danger">Last Name</label>
+                <input type="text" class="form-control" name="lastname" placeholder="Your Last Name" value="{{lastname}}">
+            </div>
+            <div class="mb-3">
+                <label for="password" class="form-label text-danger">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Your Password">
+            </div>
+            <div class="mb-3">
+                <label for="repassword" class="form-label text-danger">Re-Password</label>
+                <input type="password" class="form-control" name="repassword" placeholder="Your Password Again">
+            </div>
+            <button type="submit" value="Register" class="btn btn-primary mt-3">REGISTER</button>
+        </form>
+    </div>
+</div>
+{% endblock main-content %}

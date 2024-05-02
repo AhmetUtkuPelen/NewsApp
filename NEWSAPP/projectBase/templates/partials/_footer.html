@@ -1,0 +1,23 @@
+{% load static %}
+{% if request.user.is_authenticated %}
+<div class="bg-dark mt-5">
+  <footer class="py-3 my-4">
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item mt-2 mx-2"><a data-toggle="popover" class="iconhover" title="This App Was Made By Using Django Framework" data-content="Popover content goes here."><i class="fa-brands fa-python fs-1 text-info"></i></a></li>
+      <li class="nav-item mt-2 mx-2"><a data-toggle="popover" class="iconhover" title="Javascript and Javascript Libraries Were Used In This Project" data-content="Popover content goes here."><i class="fa-brands fa-js fs-1 text-info"></i></a></li>
+      <li class="nav-item mt-2 mx-2"><a data-toggle="popover" class="iconhover" title="Bootstrap Was Used For Styling In This Project" data-content="Popover content goes here."><i class="fa-brands fa-bootstrap fs-1 text-info"></i></a></li>    </ul>
+    <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+      <li class="nav-item"><a target="_blank" href="https://github.com/AhmetUtkuPelen" class="nav-link px-2 text-body-secondary"><i class="fa-brands fa-github fs-1 text-info"></i></a></li>
+      <li class="nav-item"><a target="_blank" href="https://www.linkedin.com/in/ahmet-utku-pelen-4941b820b/" class="nav-link px-2 text-body-secondary"><i class="fa-brands fa-linkedin fs-1 text-info"></i></a></li>
+      <li class="nav-item"><a target="_blank" href="https://www.instagram.com/rngd_aup/" class="nav-link px-2 text-body-secondary"><i class="fa-brands fa-instagram fs-1 text-info"></i></a></li>
+    </ul>
+    <p class="text-center text-info fs-3">© 2024 AUP</p>
+  </footer>
+</div>
+{% else %}
+<div class="bg-dark">
+  <footer class="py-3 my-4">
+    <p class="text-center text-info fs-3">© 2024 AUP</p>
+  </footer>
+</div>
+{% endif %}

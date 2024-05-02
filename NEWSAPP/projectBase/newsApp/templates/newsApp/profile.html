@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<div class="container text-center mt-5">
+  <div class="card mb-3 text-center" style="max-width: 900px;">
+    <div class="row text-center align-items-center justify-content-center ">
+      <div class="col-md-12">
+        <div class="card-body">
+          <h5 class="card-title text-uppercase text-danger">{{request.user.username}}</h5>
+          <form method="POST" enctype="multipart/form-data" action="{% url 'profile' %}">
+            {% csrf_token %}
+                  {{form}}
+                  <input class="btn btn-primary text-white w-50 mt-3" type="submit" value="SEND">
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}

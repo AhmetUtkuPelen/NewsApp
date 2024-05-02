@@ -1,0 +1,28 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-light text-center givemestyle">
+  <div class="container-fluid text-center">
+    <button class="navbar-toggler givemestyle2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">MENU</a>
+          <ul class="dropdown-menu text-center" aria-labelledby="navbarDropdown">
+            {% if user.is_authenticated %}
+            <li><a class="dropdown-item text-info" href="{% url "index" %}">Home</a></li>
+            <li><a class="dropdown-item text-info" href="{% url "profile" %}">Profile</a></li>
+            <li><a class="dropdown-item text-info" href="{% url "usernews" %}">User News</a></li>
+            <li><a class="dropdown-item text-info" href="{% url "globalnews" %}">Global News By Category</a></li>
+            <li><a class="dropdown-item text-danger" href="{% url "logout" %}">Log Out</a></li>
+            {% else %}
+            <li><a class="dropdown-item text-info" href="{% url "login" %}">Login</a></li>
+            <li><a class="dropdown-item text-info" href="{% url "register" %}">Register</a></li>
+            <li><hr class="dropdown-divider bg-white"></li>
+            {% endif %}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

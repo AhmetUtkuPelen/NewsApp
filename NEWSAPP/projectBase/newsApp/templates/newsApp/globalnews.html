@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<div class="container text-center" style="min-height:50vh">
+    <div class="text-center">
+        <a class="btn btn-primary text-white mt-2" href="{% url 'globalnews' %}?category=Health">Health</a>
+        <a class="btn btn-primary text-white mt-2" href="{% url 'globalnews' %}?category=Science">Science</a>
+        <a class="btn btn-primary text-white mt-2" href="{% url 'globalnews' %}?category=Technology">Technology</a>
+        <a class="btn btn-primary text-white mt-2" href="{% url 'globalnews' %}?category=Entertainment">Entertainment</a>
+        <a class="btn btn-primary text-white mt-2" href="{% url 'globalnews' %}?category=Business">Business</a>
+        <a class="btn btn-primary text-white mt-2" href="{% url 'globalnews' %}?category=Sports">Sports</a>
+</div>
+    {% for a in articles %}
+            <div class="text-center mt-5 border border-primary rounded">
+                <img src="{{a.urlToImage}}" class="card-img-top shadow-lg rounded">
+                <div class="card-body">
+                  <h2 class="card-title text-secondary fs-3 text-center mt-3">{{a.author}}</h2>
+                  <hr>
+                  <h5 class="card-title text-primary text-center mt-3">{{a.title}}</h5>
+                  <hr>
+                  <p class="card-text text-center fs-3 text-secondary mt-3"><span class="text-danger">{{a.source.name}} /</span> Date: {{a.publishedAt}}</p>
+                  <hr>
+                   <p class="card-text mt-3">{{a.description}}</p>
+                  <hr>
+                  <a href="{{a.url}}" target="_blank" class="btn btn-primary mb-3">Read The New</a>
+                </div>
+            </div>
+{% endfor %}
+    </div>
+{% endblock main-content %} 

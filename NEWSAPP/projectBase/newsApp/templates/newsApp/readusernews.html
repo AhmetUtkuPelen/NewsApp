@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+{% for news in read_news %}
+<div class="main col col-lg-12 col-md-12 mt-5 text-center" style="min-height:50vh">
+    <div class="cards">
+      <div class="cards_item">
+        <div class="card-2" style="max-width:500px">
+            <p class="text-danger fs-1 text-center mt-3 text-uppercase">{{news.owner}}</p>
+          <div class="card_image resizeme mt-5"><img src="{{news.image.url}}"></div>
+          <div class="card_content mt-5">
+            <h1 class="card_title text-center text-primary fs-1 mt-5">&#x2022;{{news.title}}&#x2022;</h1>
+            <div class="card_text">
+              <h1 class="fs-1 mt-5 text-capitalize ">{{news.description}}</h1>
+              <h1 class="mt-5 fs-5">{{news.creation_date}}</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}   
+{% endblock main-content %}

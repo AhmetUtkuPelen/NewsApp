@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<div class="swiper mt-5">
+    <div class="swiper-wrapper">
+      {% for readnews in readadminnews %}
+      <div class="swiper-slide">
+        <section class="dark">
+          <div class="container py-4">
+            <h1 class="h1 text-center text-danger mb-5 mt-2 text-uppercase" id="pageHeaderTitle">{{readnews.user}}</h1>
+            <article class="postcard dark blue">
+              <a class="postcard__img_link" href="#">
+                <img class="postcard__img" src="{{readnews.image.url}}" alt="Image Title" />
+              </a>
+              <div class="postcard__text">
+                <h1 class="postcard__title blue"><a class="text-decoration-none text-info " href="{% url 'readadminnews' readnews.id %}">{{readnews.name}}</a></h1>
+                <div class="postcard__subtitle small">
+                  <time><i class="fas fa-calendar-alt mx-2 fs-5"></i>{{readnews.creation_time}}</time>
+                </div>
+                <div class="postcard__bar"></div>
+                <div class="postcard__preview-txt">{{readnews.text}}</div>
+                <ul class="postcard__tagbox">
+                  <li class="tag__item"><i class="fas fa-tag mx-2 mt-2"></i>{{readnews.category}}</li>
+                  <li class="tag__item"><i class="fas fa-clock mx-2 mt-2"></i>{{readnews.approx_read_time}}</li>
+                  <li class="tag__item play blue">
+                    <a class="text-decoration-none fs-4" href="{% url 'readadminnews' readnews.id %}"><i class="fas fa-play mx-2"></i>Read News</a>
+                  </li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev text-info"></div>
+    <div class="swiper-button-next text-info"></div>
+    <div class="swiper-scrollbar bg-info"></div>
+  </div>
+{% endblock main-content %}

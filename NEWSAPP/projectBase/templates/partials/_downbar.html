@@ -1,0 +1,29 @@
+{% load static %}
+{% if user.is_authenticated %} 
+<nav class="navbar bg-dark">
+    <div class="text-center mx-5">
+      <form class="text-center">
+        <div class="convert-box ">
+            <div class="amount">
+                <input type="text" value="1" class="text-center text-primary">
+            </div>
+            <div class="from">
+                <div class="select-input mt-2">
+                    <img src="https://flagcdn.com/48x36/us.png">
+                    <select class="rounded text-danger"></select>
+                </div>
+            </div>
+            <div class="reverse"><i class="fas fa-exchange-alt"></i></div>
+            <div class="to">
+                <div class="select-input mt-2">
+                    <img src="https://flagcdn.com/48x36/gb.png">
+                    <select class="rounded text-danger"></select>
+                </div>
+            </div>
+            <div class="result text-white mt-2">Getting exchange rate...</div>
+            <button class="btn btn-info text-white mt-3">Get Exchange Rate</button>
+        </div>
+    </form>
+    </div>
+  </nav>
+{% endif %}
