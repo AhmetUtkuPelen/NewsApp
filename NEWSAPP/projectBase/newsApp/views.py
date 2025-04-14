@@ -80,24 +80,33 @@ def readadminnews(request,nid):
     read_news = CreateNews.objects.filter(id=nid)
     return render(request,'newsApp/readadminnews.html',{"readnews":read_news})
 
-# ! PROFILE PAGE FOR USERS TO CREATE THEIR OWN NEWS ! #
+# ! PROFILE PAGE FOR USERS TO CREATE THEIR OWN NEWS AND EDIT THEIR PROFILES ! #
 
 @login_required
 def profile(request):
     context = {}
-     
-    context['form'] = CreateUserNewsForm
+    
+    # Initialize both forms
+    context['form'] = CreateUserNewsForm()
+    context['user_form'] = UserProfileForm(instance=request.user)
+    
     if request.method == "POST":
-        
-        form = CreateUserNewsForm(request.POST,request.FILES)
-        
-        if form.is_valid():
-            form = form.save(commit = False)
-            form.owner = request.user
-            form.save()
-            return redirect('usernews')
-    else:
-        return render(request,'newsApp/profile.html',context)
+        if 'news_submit' in request.POST:
+            # Handle news form submission
+            form = CreateUserNewsForm(request.POST, request.FILES)
+            if form.is_valid():
+                form = form.save(commit=False)
+                form.owner = request.user
+                form.save()
+                return redirect('usernews')
+        elif 'profile_submit' in request.POST:
+            # Handle profile form submission
+            user_form = UserProfileForm(request.POST, instance=request.user)
+            if user_form.is_valid():
+                user_form.save()
+                return redirect('profile')
+    
+    return render(request, 'newsApp/profile.html', context)
 
 
 # ! HTML PAGE FUNCTION FOR USERS TO READ ALL USERS' NEWS ! #

@@ -49,6 +49,17 @@ class Comment(models.Model):
         return self.name
     
 
+
+# ! USER INTERESTS ! #
+class Interests(models.Model):
+    name = models.CharField(max_length=50)
+    relationship = models.ForeignKey(User,on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return self.name
+
+
+
 # ! USER PROFESSION - MAYBE ???? ! # 
 class Profession(models.Model):
     name = models.CharField(max_length=50)

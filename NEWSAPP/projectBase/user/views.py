@@ -35,6 +35,7 @@ def user_register(request):
         lastname = request.POST["lastname"]
         password = request.POST["password"]
         repassword = request.POST["repassword"]
+        is_admin = request.POST.get("is_admin", False) == "on"  # Check if admin checkbox is checked
         
         if password == repassword:
             if User.objects.filter(username = username).exists():
@@ -55,7 +56,20 @@ def user_register(request):
                                    "lastname":lastname,
                                     })
                 else:
-                    User.objects.create_user(username = username , email = email , first_name = firstname , last_name = lastname , password = password)
+                    # Create the user
+                    user = User.objects.create_user(
+                        username=username, 
+                        email=email, 
+                        first_name=firstname, 
+                        last_name=lastname, 
+                        password=password
+                    )
+                    
+                    # If admin checkbox was checked, set admin privileges
+                    if is_admin:
+                        user.is_staff = True  # Gives access to admin site
+                        user.is_superuser = True  # Gives all permissions
+                        user.save()
                     
                     return redirect("login")
                     
@@ -67,7 +81,6 @@ def user_register(request):
                            "firstname":firstname,
                            "lastname":lastname,
                            })
-        
         
     return render(request,'user/register.html')
 
