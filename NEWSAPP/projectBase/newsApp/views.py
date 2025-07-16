@@ -1,8 +1,9 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from .models import*
 import requests
 from django.contrib.auth.decorators import login_required
 from .forms import*
+
 
 # Create your views here.
 
@@ -123,77 +124,48 @@ def user_news(request):
 
 # ! SPESIFIC USER NEWS READ HTML PAGE FUNCTION ! #
 
-def read_user_news(request,newsId):
-    context = {}
+@login_required
+def edit_user_news(request, newsId):
+    news = get_object_or_404(UserCreateNews, id=newsId)
+    if not news.can_edit(request.user):
+        return redirect('usernews')
     
-    context['read_news'] = UserCreateNews.objects.filter(id=newsId)
+    if request.method == 'POST':
+        form = CreateUserNewsForm(request.POST, request.FILES, instance=news)
+        if form.is_valid():
+            form.save()
+            return redirect('readusernews', newsId=newsId)
+    else:
+        form = CreateUserNewsForm(instance=news)
     
-    return render(request,'newsApp/readusernews.html',context)
+    return render(request, 'newsApp/edit_news.html', {'form': form, 'news': news})
 
+@login_required
+def delete_user_news(request, newsId):
+    news = get_object_or_404(UserCreateNews, id=newsId)
+    if news.can_edit(request.user):
+        news.delete()
+    return redirect('usernews')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# def create_user_news(request,id):
-#     context = {}
+def read_user_news(request, newsId):
+    news = get_object_or_404(UserCreateNews, id=newsId)
+    comments = news.comments.all().order_by('-date')
     
-#     context['form'] == CreateUserNewsForm
-#     if request.method == "POST":
-#         form = CreateUserNewsForm(request.POST,request.FILES)
-        
-#         if form
+    if request.method == 'POST' and request.user.is_authenticated:
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.user = request.user
+            comment.news_article = news
+            comment.save()
+            return redirect('readusernews', newsId=newsId)
+    else:
+        form = CommentForm()
+    
+    context = {
+        'read_news': [news],
+        'comments': comments,
+        'comment_form': form,
+    }
+    return render(request, 'newsApp/readusernews.html', context)
 
-
-     # if request.user.is_authenticated:
-
-    # else:
-    #     return render(request,'user/login.html')
-    
-    
-    
-    #     context = {}
-    
-    # context["result"] = None
-    
-    # if request.user.is_authenticated:
-    #     if 'city' in request.GET:
-    # # fetch the weather from Google.
-    #         html_content = get_html_content(request)
-    #         from bs4 import BeautifulSoup
-    #         soup = BeautifulSoup(html_content, 'html.parser')
-    #         result = dict()
-    # # extract region
-    #         result['region'] = soup.find("span", attrs={"class": "BNeawe tAd8D AP7Wnd"}).text
-    # # extract temperature now
-    #         result['temp_now'] = soup.find("div", attrs={"class": "BNeawe iBp4i AP7Wnd"}).text
-    # # get the day, hour and actual weather
-    #         result['dayhour'], result['weather_now'] = soup.find("div", attrs={"class": "BNeawe tAd8D AP7Wnd"}).text.split('\n')
-    #     context["readadminnews"] = CreateNews.objects.all()

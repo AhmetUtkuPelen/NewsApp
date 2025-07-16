@@ -35,3 +35,13 @@ class UserProfileForm(forms.ModelForm):
             'first_name': forms.TextInput(attrs={'class': 'form-control border border-1 border-primary mt-2 text-center'}),
             'last_name': forms.TextInput(attrs={'class': 'form-control border border-1 border-primary mt-2 text-center'}),
         }
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['name', 'mail', 'text']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'mail': forms.EmailInput(attrs={'class': 'form-control'}),
+            'text': forms.Textarea(attrs={'class': 'form-control', 'rows': 4}),
+        }

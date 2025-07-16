@@ -14,4 +14,8 @@ urlpatterns = [
     path('usernews/',user_news,name="usernews"),
     # ! spesific user news url ! #
     path('readusernews/<newsId>',read_user_news,name="readusernews"),
+    # ! url for users to edit their news ! #
+    path('editnews/<newsId>/', edit_user_news, name="editusernews"),
+    # ! url for users to delete their news ! #
+    path('deletenews/<newsId>/', delete_user_news, name="deleteusernews"),
 ]

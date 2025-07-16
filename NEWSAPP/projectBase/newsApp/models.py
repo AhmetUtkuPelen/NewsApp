@@ -5,7 +5,9 @@ from user.models import*
 from django.contrib.auth.models import User
 
 
+
 # Create your models here.
+
 
 # ! IN ORDER TO DEFINE A CATEGORY FOR NEWS ! #
 
@@ -36,6 +38,25 @@ class CreateNews(models.Model):
         return self.name
 
 
+
+# ! CREATE NEWS FOR USERS ! #
+
+class UserCreateNews(models.Model):
+    title = models.CharField(max_length=100)
+    description = models.TextField(("description"))
+    image = models.ImageField(upload_to='images',blank=True)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
+    creation_date = models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.title
+    
+    def can_edit(self, user):
+        return self.owner == user
+
+
+
+
 # ! USER COMMENT FORM ! #
 
 class Comment(models.Model):
@@ -44,10 +65,11 @@ class Comment(models.Model):
     text = RichTextField()
     date = models.DateTimeField(auto_now_add = True , blank = True , null = True)
     user = models.ForeignKey(User,on_delete = models.CASCADE)
+    news_article = models.ForeignKey(UserCreateNews, on_delete=models.CASCADE, related_name='comments', null=True)
     
     def __str__(self):
-        return self.name
-    
+        return f"{self.name} - {self.news_article.title if self.news_article else 'No article'}"
+
 
 
 # ! USER INTERESTS ! #
@@ -69,14 +91,3 @@ class Profession(models.Model):
         return self.name
     
     
-# ! CREATE NEWS FOR USERS ! #
-
-class UserCreateNews(models.Model):
-    title = models.CharField(max_length=100)
-    description = models.TextField(("description"))
-    image = models.ImageField(upload_to='images',blank=True)
-    owner = models.ForeignKey(User,on_delete=models.CASCADE)
-    creation_date = models.DateTimeField(auto_now=True)
-    
-    def __str__(self):
-        return self.title

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% block main-content %}
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="text-primary text-center">Edit News</h3>
+        </div>
+        <div class="card-body">
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+              <label for="{{form.title.id_for_label}}" class="form-label">Title</label>
+              {{form.title}}
+            </div>
+            <div class="mb-3">
+              <label for="{{form.description.id_for_label}}" class="form-label">Description</label>
+              {{form.description}}
+            </div>
+            <div class="mb-3">
+              <label for="{{form.image.id_for_label}}" class="form-label">Image</label>
+              {{form.image}}
+              {% if news.image %}
+              <div class="mt-2">
+                <small class="text-muted">Current image:</small><br>
+                <img src="{{news.image.url}}" alt="Current image" style="max-width: 200px; height: auto;">
+              </div>
+              {% endif %}
+            </div>
+            <div class="text-center">
+              <button type="submit" class="btn btn-primary me-2">Update News</button>
+              <a href="{% url 'readusernews' news.id %}" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock main-content %}
